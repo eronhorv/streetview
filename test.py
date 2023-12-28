@@ -58,17 +58,23 @@ ims = ims.to(device)
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(3, 3, 3)
         self.pool = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(3, 16, 5)
-        self.fc1 = nn.Linear(78880, 120)
-        self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 53)
+
+        self.conv1 = nn.Conv2d(3, 3, 3)
+        self.conv2 = nn.Conv2d(3, 4, 5)
+        self.conv3 = nn.Conv2d(4, 8, 5)
+        self.conv4 = nn.Conv2d(8, 8, 5)
+
+        self.fc1 = nn.Linear(1248, 600)
+        self.fc2 = nn.Linear(600, 120)
+        self.fc3 = nn.Linear(120, 53)
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
-        
+        x = self.pool(F.relu(self.conv3(x)))
+        x = self.pool(F.relu(self.conv4(x)))
+
         x = torch.flatten(x, 1) # flatten all dimensions except batch
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
@@ -77,6 +83,12 @@ class Net(nn.Module):
     
 
 net = Net().to(device)
+
+total_params = sum(
+	param.numel() for param in net.parameters()
+)
+print(total_params)
+
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
@@ -89,7 +101,7 @@ cntry_new = torch.tensor(cntry_new)
 
 print(torch.max(cntry_new))
 
-for epoch in range(5):  # loop over the dataset multiple times
+for epoch in range(250):  # loop over the dataset multiple times
 
     print(f'new epoch')
     running_loss = 0.0
