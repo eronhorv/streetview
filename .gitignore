@@ -1,7 +1,5 @@
-data/data0.parquet
-data/data1.parquet
-data/data2.parquet
-data/data3.parquet
-data/data4.parquet
-data/data5.parquet
+data/*
 data.npy
+compressed_dataset/*
+jpgdata/*
+trash/*
