@@ -7,4 +7,4 @@
 - Trained on ~ 34 000 images and 56 countries
 
 ## Documentation
-- [Hungarian documentation](X2ZA3U/_annbsc23_p2_hw/X2ZA3U_annbsc23_p2_hw_documentation.pdf)
+- [Hungarian documentation](X2ZA3U_annbsc23_p2_hw/X2ZA3U_annbsc23_p2_hw_documentation.pdf)
